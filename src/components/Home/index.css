@@ -28,7 +28,7 @@ thead {
 .home-page__search-wrapper-and-filter-wrapper {
     display: flex;
     justify-content: space-between;
-    height: 30px;
+    height: 40px;
     margin-bottom: 2rem;
 }
 
@@ -64,6 +64,7 @@ thead {
 
 .home-page__select-item {
     border-radius: 5px;
+    padding: 0 10px;
 }
 
 .home-page__table-row:hover {
