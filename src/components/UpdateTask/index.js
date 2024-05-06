@@ -57,21 +57,28 @@ const UpdateTask = () => {
         if (form.title !== "" && form.price !== "" && form.description !== "" && form.category !== "" && form.image !== "") {
             const {price, sold, ...rest} = form;
 
-            // Create a new Date object
-            const currentDate = new Date();
+            // function getTimeString() {
+            //     const now = new Date(); // Get the current date and time
+            //     const year = now.getFullYear();
+            //     const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+            //     const day = String(now.getDate()).padStart(2, '0');
+            //     const hours = String(now.getHours()).padStart(2, '0');
+            //     const minutes = String(now.getMinutes()).padStart(2, '0');
+            //     const seconds = String(now.getSeconds()).padStart(2, '0');
+            //     const timezoneOffset = now.getTimezoneOffset(); // Get timezone offset in minutes
+            //     const timezoneOffsetHours = Math.abs(Math.floor(timezoneOffset / 60)); // Convert minutes to hours
+            //     const timezoneOffsetMinutes = Math.abs(timezoneOffset % 60); // Get the remaining minutes
 
-            // Get the UTC date components
-            const year = currentDate.getUTCFullYear();
-            const month = currentDate.getUTCMonth() + 1; // Month starts from 0
-            const day = currentDate.getUTCDate();
-            const hours = currentDate.getUTCHours();
-            const minutes = currentDate.getUTCMinutes();
-            const seconds = currentDate.getUTCSeconds();
+            //     const timezoneSign = timezoneOffset >= 0 ? '-' : '+'; // Determine if the timezone is ahead or behind
+            //     const timezoneString = `${timezoneSign}${String(timezoneOffsetHours).padStart(2, '0')}:${String(timezoneOffsetMinutes).padStart(2, '0')}`;
 
-            // Create a UTC time string in the format: YYYY-MM-DDTHH:MM:SSZ
-            const utcTimeString = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}Z`;
+            //     const timeString = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${timezoneString}`;
 
-            console.log(utcTimeString);
+            //     return timeString;
+            // }
+
+            // const timeString = getTimeString()
+
 
 
 
@@ -81,10 +88,10 @@ const UpdateTask = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({...rest, price: parseFloat(price), sold: parseInt(sold), dateOfSale: utcTimeString})
+                body: JSON.stringify({...rest, price: parseFloat(price), sold: parseInt(sold)})
             }
 
-            console.log({...rest, price: parseFloat(price), sold: parseInt(sold), dateOfSale: utcTimeString})
+            console.log({...rest, price: parseFloat(price), sold: parseInt(sold) === 1 ? true : false})
 
             const response = await fetch(url, options);
             const data = await response.json();
