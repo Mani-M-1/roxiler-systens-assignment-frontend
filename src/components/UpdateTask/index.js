@@ -53,8 +53,27 @@ const UpdateTask = () => {
         event.preventDefault();
         console.log(form)
 
-        if (form.title !== "" && form.price !== "" && form.description !== "", form.category !== "", form.image !== "") {
+
+        if (form.title !== "" && form.price !== "" && form.description !== "" && form.category !== "" && form.image !== "") {
             const {price, sold, ...rest} = form;
+
+            // Create a new Date object
+            const currentDate = new Date();
+
+            // Get the UTC date components
+            const year = currentDate.getUTCFullYear();
+            const month = currentDate.getUTCMonth() + 1; // Month starts from 0
+            const day = currentDate.getUTCDate();
+            const hours = currentDate.getUTCHours();
+            const minutes = currentDate.getUTCMinutes();
+            const seconds = currentDate.getUTCSeconds();
+
+            // Create a UTC time string in the format: YYYY-MM-DDTHH:MM:SSZ
+            const utcTimeString = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}Z`;
+
+            console.log(utcTimeString);
+
+
 
             const url = `${apiUrl}/tasks/${params.id}`
             const options = {
@@ -62,8 +81,10 @@ const UpdateTask = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({...rest, price: parseFloat(price), sold: parseInt(form.sold), dateOfSale: new Date()})
+                body: JSON.stringify({...rest, price: parseFloat(price), sold: parseInt(sold), dateOfSale: utcTimeString})
             }
+
+            console.log({...rest, price: parseFloat(price), sold: parseInt(sold), dateOfSale: utcTimeString})
 
             const response = await fetch(url, options);
             const data = await response.json();
